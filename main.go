@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"os"
 	"zmakers-backend/controllers"
+	"zmakers-backend/logger"
 	"zmakers-backend/routers"
 	"zmakers-backend/service"
-	"zmakers-backend/logger"
 )
 
 func main() {
@@ -24,5 +24,4 @@ func main() {
 	if err != nil {
 		log.Fatal("system error ", err)
 	}
-
 }

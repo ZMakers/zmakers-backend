@@ -22,8 +22,8 @@ func TestSetV1dmsAddress(t *testing.T) {
 }
 
 func TestCreateCollection(t *testing.T) {
-	metaPath := "https://dpos.com"
-	txHash, err := tx.createCollection(metaPath)
+	metaPath := "abc"
+	txHash, err := tx.CreateCollection(metaPath)
 	fmt.Printf("txHash %v, err: %v\n", txHash, err)
 }
 
@@ -35,9 +35,22 @@ var callDMC = callObj{
 }
 
 func TestGetCollection(t *testing.T) {
-	res, err := callDMC.getCollection("4")
+	res, err := callDMC.getCollection("5")
 	if err != nil {
 		fmt.Println(err)
+	}
+	fmt.Println(res)
+}
+
+func TestCreateDigitalMedia(t *testing.T) {
+	txHash, err := tx.createDigitalMedia("5", "1", "https://12311")
+	fmt.Printf("txHash %v, err: %v\n", txHash, err)
+}
+
+func TestGetDigitalMedia(t *testing.T) {
+	res, err := callDMC.getDigitalMedia("1")
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
 	}
 	fmt.Println(res)
 }

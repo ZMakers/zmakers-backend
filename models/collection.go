@@ -1,10 +1,13 @@
 package models
 
-import "zmakers-backend/service"
+import (
+	"zmakers-backend/service"
+)
 
 type Collection struct {
-	Owner    string
-	MetaPath string
+	Owner    string `json:"owner"`
+	MetaPath string `json:"meta_path"`
+	TxHash string `json:"tx_hash"`
 }
 
 func (c *Collection) PreCheck() bool {

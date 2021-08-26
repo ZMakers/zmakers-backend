@@ -24,7 +24,6 @@ func DbInit() *gorm.DB {
 	Dbname := "zmakers" // db name
 	timeout := "10s"
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local&timeout=%s", username, password, host, port, Dbname, timeout)
-
 	var err error
 	Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -32,9 +31,9 @@ func DbInit() *gorm.DB {
 	}
 
 	//mysqlDb, err := Db.DB()
-	if err != nil {
-		panic(fmt.Sprintf("get mysql db error %s", err))
-	}
+	//if err != nil {
+	//	panic(fmt.Sprintf("get mysql db error %s", err))
+	//}
 	//database := getConfig()
 	//mysqlDb.SetMaxIdleConns(database.MaxConn)
 	//mysqlDb.SetMaxOpenConns(database.MaxOpen)

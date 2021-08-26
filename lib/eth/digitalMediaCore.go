@@ -1,10 +1,9 @@
 package eth
 
 import (
-	"context"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
-	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"math/big"
@@ -38,7 +37,7 @@ func (dmcTx *TransactionObj) setV1DigitalMediaStoreAddress(dmsAddress string) (s
 	return dmcTx.invokeDmcContract(append(funcSignatureBytes, _dmsAddress...))
 }
 
-func (dmcTx *TransactionObj) createCollection(metaPath string)  (string, error) {
+func (dmcTx *TransactionObj) CreateCollection(metaPath string)  (string, error) {
 	funcSignatureBytes := crypto.Keccak256([]byte("createCollection(string)"))[:4]
 	metaPathHex := hex.EncodeToString([]byte(metaPath))
 	fmt.Println(len(metaPathHex))
@@ -62,32 +61,83 @@ func (dmcCall *callObj) getCollection(collectionId string) (string, error) {
 	cId := common.LeftPadBytes(_collectionId.Bytes(), 32)
 
 	dmcCall.Data = append(funcSignatureBytes, cId...)
-	toAdd := common.HexToAddress(dmcCall.To)
-	callMsg := ethereum.CallMsg{
-		To: &toAdd,
-		Data: dmcCall.Data,
-	}
 
-	_collection, err := ethClient.CallContract(context.Background(), callMsg, nil)
+	_collection, err := dmcCall.callContract()
+
 	if err != nil {
 		return "", err
 	}
 
-	fmt.Println(len(_collection))
 
 	cid := common.Bytes2Hex(_collection[:32])
 
 	address := common.Bytes2Hex(_collection[44:64])
-	fmt.Println(string(_collection[64:128]))
 
 	Collection := collection{
 		Id: Hex2Dec(cid),
 		Address: "0x" + address,
 		MetaPath: common.Bytes2Hex(_collection[64:]),
 	}
-	fmt.Println(Collection)
+	result, _ := json.Marshal(&Collection)
+	return string(result), nil
+}
 
-	return common.Bytes2Hex(_collection), nil
+func (dmcTx *TransactionObj) createDigitalMedia(totalSupply string, collectionId string, metaPath string)  (string, error) {
+	funcSignatureBytes := crypto.Keccak256([]byte("createDigitalMedia(uint32,uint256,string)"))[:4]
+
+	_totalSupply := new(big.Int)
+	_totalSupply.SetString(totalSupply, 10)
+	totalSupplyBytes := common.LeftPadBytes(_totalSupply.Bytes(), 32)
+
+	_collectionId := new(big.Int)
+	_collectionId.SetString(collectionId, 10)
+	collectionIdBytes := common.LeftPadBytes(_collectionId.Bytes(), 32)
+
+	data := append(funcSignatureBytes, totalSupplyBytes...)
+	data = append(data, collectionIdBytes...)
+	data = append(data, []byte(metaPath)...)
+	return dmcTx.invokeDmcContract(data)
+}
+
+type DigitalMedia struct {
+	Id int `json:"id"`
+	TotalSupply int `json:"totalSupply"`
+	PrintIndex int `json:"printIndex"`
+	CollectionId int `json:"collectionId"`
+	Creator string `json:"creator"`
+	MetaPath string `json:"metaPath"`
+}
+
+func (dmcCall *callObj) getDigitalMedia(collectionId string) (string, error) {
+	dmcCall.To = dmcContract
+	funcSignatureBytes := crypto.Keccak256([]byte("getDigitalMedia(uint256)"))[:4]
+
+	_collectionId := new(big.Int)
+	_collectionId.SetString(collectionId, 10)
+	collectionIdBytes := common.LeftPadBytes(_collectionId.Bytes(), 32)
+
+	dmcCall.Data = append(funcSignatureBytes, collectionIdBytes...)
+	digitalMedia, err := dmcCall.callContract()
+	if err != nil {
+		return "", err
+	}
+
+	_digitalMediaId := Hex2Dec(common.Bytes2Hex(digitalMedia[:32]))
+	_totalSupply := Hex2Dec(common.Bytes2Hex(digitalMedia[32:64]))
+	_printIndex := Hex2Dec(common.Bytes2Hex(digitalMedia[64:96]))
+	_cId := Hex2Dec(common.Bytes2Hex(digitalMedia[96:128]))
+	creator := "0x" + common.Bytes2Hex(digitalMedia[140:160])
+	metaPath := common.Bytes2Hex(digitalMedia[160:])
+	_digitalMedia := &DigitalMedia{
+		_digitalMediaId,
+		_totalSupply,
+		_printIndex,
+		_cId,
+		creator,
+		metaPath,
+	}
+	result, _ := json.Marshal(_digitalMedia)
+	return string(result), nil
 }
 
 func (dmcTx *TransactionObj) addApprovedTokenCreator(creator string) (string, error) {

@@ -6,6 +6,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/stretchr/testify/assert"
 	"math/big"
+	"reflect"
 	"testing"
 )
 
@@ -74,4 +75,15 @@ func TestDeployDigitalMediaCore(t *testing.T) {
 
 func TestFor(t *testing.T) {
 	deployDigitalMediaCore(privateKey)
+}
+
+func TestFAA(t *testing.T) {
+	//        0xf54e9d77
+	//funcSignatureBytes := crypto.Keccak256([]byte("mintArtWorksToken(struct,struct[],uint256)"))[:4]
+	var ss rune = 'a'
+	str := "asdasdasda"
+	fmt.Println(len([]byte(str)))
+	fmt.Println(reflect.TypeOf(ss))
+	//fmt.Println(funcSignatureBytes)
+	//fmt.Printf("func Sig: %v", common.Bytes2Hex(funcSignatureBytes))
 }
