@@ -15,12 +15,24 @@ func main() {
 	service.DbInit()
 	defer service.DbClose()
 
-	collectionController := controllers.CollectionController{
+	bc := controllers.BaseController{
 		Render: render.New(),
-		Log: logger.MustNew("collectionAPI", os.Getenv("SENTRY_DSN")),
+		Log: logger.MustNew("backendAPI", os.Getenv("SENTRY_DSN")),
 	}
 
-	err := http.ListenAndServe(":3000", routers.RegisterCollectionService(&collectionController))
+	collectionController := controllers.CollectionController{
+		&bc,
+	}
+
+	mediaController := controllers.MediaController{
+		&bc,
+	}
+
+	userController := controllers.UserController{
+		&bc,
+	}
+	err := http.ListenAndServe(":3000", routers.RegisterServices(&collectionController,
+		&mediaController, &userController))
 	if err != nil {
 		log.Fatal("system error ", err)
 	}

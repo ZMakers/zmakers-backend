@@ -6,8 +6,8 @@ import (
 
 type Collection struct {
 	Owner    string `json:"owner"`
-	MetaPath string `json:"meta_path"`
-	TxHash string `json:"tx_hash"`
+	MetaPath string `json:"metaPath" gorm:"column:metaPath"`
+	TxHash string `json:"txHash" gorm:"column:txHash"`
 }
 
 func (c *Collection) PreCheck() bool {
