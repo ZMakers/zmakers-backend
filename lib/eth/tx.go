@@ -56,7 +56,7 @@ func (dmcTx *TransactionObj) SignTx() (*types.Transaction, error) {
 
 	dmcTx.GasPrice, err = ethClient.SuggestGasPrice(context.Background())
 	if err != nil {
-		return nil, errors.New("suggest gas price error")
+		return nil, errors.New("suggest gas price error: "+err.Error())
 	}
 
 	var baseTx *types.LegacyTx

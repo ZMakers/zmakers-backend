@@ -52,6 +52,7 @@ func RegisterCollectionService(CollectionController *CollectionController) *chi.
 
 func RegisterMediaService(MediaController *MediaController) *chi.Mux {
 	router.Post("/media", MediaController.NewMedia)
+	router.Post("/media/buy", MediaController.BuyMedia)
 	return router
 }
 

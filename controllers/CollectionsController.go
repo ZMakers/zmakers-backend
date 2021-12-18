@@ -58,6 +58,5 @@ func (cc *CollectionController) NewCollection(w http.ResponseWriter, r *http.Req
 	infos[2] = payload
 
 	defer cc.catchError(w, r, infos)
-
 	payload.CreateCollection()
 }

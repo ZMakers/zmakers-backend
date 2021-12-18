@@ -20,7 +20,7 @@ func init() {
 }
 
 func initEthClient() *ethclient.Client {
-	client, err := ethclient.Dial("http://localhost:8545")
+	client, err := ethclient.Dial("wss://ropsten.infura.io/ws/v3/a2816bc61057481188c0a772cee3134e")
 	if err != nil {
 		os.Exit(1)
 	}
