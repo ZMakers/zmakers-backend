@@ -27,7 +27,7 @@ func DbInit() *gorm.DB {
 	var err error
 	Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
+		panic("failed to connect database"+err.Error())
 	}
 
 	//mysqlDb, err := Db.DB()
