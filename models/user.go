@@ -11,12 +11,12 @@ import (
 )
 
 type User struct {
-	Id uuid.UUID `json:"id"`
-	Name string `json:"name"`
-	Email string `json:"email"`
-	Password string `gorm:"-"`
-	Hash string `json:"hash"`
-	Token string `json:"token"`
+	Id       uuid.UUID `json:"id"`
+	Name     string    `json:"name"`
+	Email    string    `json:"email"`
+	Password string    `gorm:"-"`
+	Hash     string    `json:"hash"`
+	Token    string    `json:"token"`
 }
 
 func (u *User) CreateBefore() error {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"zmakers-backend/models"
+	"zmakers-backend/models/utility"
 )
 
 type MediaController struct {
@@ -12,19 +13,26 @@ type MediaController struct {
 }
 
 func (mc *MediaController) catchError(w http.ResponseWriter, r *http.Request, infos []interface{}) {
+	var jsonResult utility.Response
 	if err := recover(); err != nil {
 		mc.BC.Log.Errorf(r, infos[0].(string), err)
-		mc.BC.Render.JSON(w, http.StatusBadRequest, infos[1])
+		jsonResult.Code = http.StatusBadRequest
+		jsonResult.Data = infos[1]
+		mc.BC.Render.JSON(w, http.StatusBadRequest, jsonResult)
 		return
 	}
+	jsonResult.Code = http.StatusOK
+	jsonResult.Data = infos[2]
 	mc.BC.Render.JSON(w, http.StatusOK, infos[2])
 }
 
 func (mc *MediaController) NewMedia(w http.ResponseWriter, r *http.Request) {
-
+	var jsonResult utility.Response
 	err := mc.BC.CheckToken(r)
 	if err != nil {
-		mc.BC.Render.JSON(w, http.StatusBadRequest, map[string]string{"token error": err.Error()})
+		jsonResult.Code = http.StatusBadRequest
+		jsonResult.Data = map[string]string{"token error": err.Error()}
+		mc.BC.Render.JSON(w, http.StatusBadRequest, jsonResult)
 		return
 	}
 
@@ -32,7 +40,9 @@ func (mc *MediaController) NewMedia(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Body)
 	err = json.NewDecoder(r.Body).Decode(&payload)
 	if err != nil {
-		mc.BC.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "Bad request. Incorrect post body "+err.Error()})
+		jsonResult.Code = http.StatusBadRequest
+		jsonResult.Data = map[string]string{"error": "Bad request. Incorrect post body "+err.Error()}
+		mc.BC.Render.JSON(w, http.StatusBadRequest, jsonResult)
 		return
 	}
 
@@ -47,8 +57,11 @@ func (mc *MediaController) NewMedia(w http.ResponseWriter, r *http.Request) {
 
 func (mc *MediaController) BuyMedia(w http.ResponseWriter, r *http.Request) {
 	err := mc.BC.CheckToken(r)
+	var jsonResult utility.Response
 	if err != nil {
-		mc.BC.Render.JSON(w, http.StatusBadRequest, map[string]string{"token error": err.Error()})
+		jsonResult.Code = http.StatusBadRequest
+		jsonResult.Data = map[string]string{"token error": err.Error()}
+		mc.BC.Render.JSON(w, http.StatusBadRequest, jsonResult)
 		return
 	}
 
@@ -56,7 +69,9 @@ func (mc *MediaController) BuyMedia(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Body)
 	err = json.NewDecoder(r.Body).Decode(&payload)
 	if err != nil {
-		mc.BC.Render.JSON(w, http.StatusBadRequest, map[string]string{"error": "Bad request. Incorrect post body "+err.Error()})
+		jsonResult.Code = http.StatusBadRequest
+		jsonResult.Data = map[string]string{"error": "Bad request. Incorrect post body "+err.Error()}
+		mc.BC.Render.JSON(w, http.StatusBadRequest, jsonResult)
 		return
 	}
 

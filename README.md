@@ -45,12 +45,15 @@ Post
 ### 应答报文示例
 ```bigquery
 {
-    "id": "2f94b4fc-46bc-4d42-bbb2-aa5a7d0e5fe5",
-    "name": "ZJJ01",
-    "email": "zzzz@asd1.com",
-    "Password": "123@123",
-    "hash": "347db5f31963daaeb91a0743ebac7b865ce56a8db425a7d2d1554e6143f2b808",
-    "token": ""
+    "code": 200,
+    "data": {
+        "id": "2f94b4fc-46bc-4d42-bbb2-aa5a7d0e5fe5",
+        "name": "ZJJ01",
+        "email": "zzzz@asd1.com",
+        "Password": "123@123",
+        "hash": "347db5f31963daaeb91a0743ebac7b865ce56a8db425a7d2d1554e6143f2b808",
+        "token": ""
+    }
 }
 ```
 
@@ -80,12 +83,15 @@ Post
 ### 应答报文示例
 ```bigquery
 {
-    "id": "2f94b4fc-46bc-4d42-bbb2-aa5a7d0e5fe5",
-    "name": "ZJJ01",
-    "email": "zzzz@asd1.com",
-    "Password": "123@123",
-    "hash": "347db5f31963daaeb91a0743ebac7b865ce56a8db425a7d2d1554e6143f2b808",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJaSkowMSIsInN1YiI6IjEyM0AxMjMiLCJleHAiOjE2Mzg2OTQ0MDgsIm5iZiI6MTYzODY4NzIwOH0.Zq1wt0LOKTBc6bgkiv1VW3EHQlqavZENrh01mJwhVtk"
+    "code": 200,
+    "data": {
+        "id": "2f94b4fc-46bc-4d42-bbb2-aa5a7d0e5fe5",
+        "name": "ZJJ01",
+        "email": "zzzz@asd1.com",
+        "Password": "123@123",
+        "hash": "347db5f31963daaeb91a0743ebac7b865ce56a8db425a7d2d1554e6143f2b808",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJaSkowMSIsInN1YiI6IjEyM0AxMjMiLCJleHAiOjE2Mzg2OTQ0MDgsIm5iZiI6MTYzODY4NzIwOH0.Zq1wt0LOKTBc6bgkiv1VW3EHQlqavZENrh01mJwhVtk"
+    }
 }
 ```
 
@@ -117,9 +123,12 @@ Post
 ### 应答报文示例
 ```bigquery
 {
-    "owner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
-    "metaPath": "http://io.ipfs.com ",
-    "txHash": "0x1234567890123456789012345678901234567890123456789012345678901234"
+    "code": 200,
+    "data": {
+        "owner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
+        "metaPath": "http://io.ipfs.com ",
+        "txHash": "0x1234567890123456789012345678901234567890123456789012345678901234"
+    }
 }
 ```
 
@@ -178,12 +187,15 @@ Post
 ### 应答报文示例
 ```bigquery
 {
-    "id": "2f94b4fc-46bc-4d42-bbb2-aa5a7d0e5fe5",
-    "name": "ZJJ01",
-    "email": "zzzz@asd1.com",
-    "Password": "123@123",
-    "hash": "347db5f31963daaeb91a0743ebac7b865ce56a8db425a7d2d1554e6143f2b808",
-    "token": ""
+    "code": 200,
+    "data": {
+        "id": "2f94b4fc-46bc-4d42-bbb2-aa5a7d0e5fe5",
+        "name": "ZJJ01",
+        "email": "zzzz@asd1.com",
+        "Password": "123@123",
+        "hash": "347db5f31963daaeb91a0743ebac7b865ce56a8db425a7d2d1554e6143f2b808",
+        "token": ""
+    }
 }
 ```
 
@@ -213,12 +225,15 @@ Post
 ### 应答报文示例
 ```bigquery
 {
-    "id": "2f94b4fc-46bc-4d42-bbb2-aa5a7d0e5fe5",
-    "name": "ZJJ01",
-    "email": "zzzz@asd1.com",
-    "Password": "123@123",
-    "hash": "347db5f31963daaeb91a0743ebac7b865ce56a8db425a7d2d1554e6143f2b808",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJaSkowMSIsInN1YiI6IjEyM0AxMjMiLCJleHAiOjE2Mzg2OTQ0MDgsIm5iZiI6MTYzODY4NzIwOH0.Zq1wt0LOKTBc6bgkiv1VW3EHQlqavZENrh01mJwhVtk"
+    "code": 200,
+    "data": {
+        "id": "2f94b4fc-46bc-4d42-bbb2-aa5a7d0e5fe5",
+        "name": "ZJJ01",
+        "email": "zzzz@asd1.com",
+        "Password": "123@123",
+        "hash": "347db5f31963daaeb91a0743ebac7b865ce56a8db425a7d2d1554e6143f2b808",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJaSkowMSIsInN1YiI6IjEyM0AxMjMiLCJleHAiOjE2Mzg2OTQ0MDgsIm5iZiI6MTYzODY4NzIwOH0.Zq1wt0LOKTBc6bgkiv1VW3EHQlqavZENrh01mJwhVtk"    
+    }
 }
 ```
 
@@ -250,9 +265,12 @@ Post
 ### 应答报文示例
 ```bigquery
 {
-    "owner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
-    "metaPath": "http://io.ipfs.com ",
-    "txHash": "0x1234567890123456789012345678901234567890123456789012345678901234"
+    "code": 200,
+    "data": {
+        "owner": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
+        "metaPath": "http://io.ipfs.com ",
+        "txHash": "0x1234567890123456789012345678901234567890123456789012345678901234"
+    } 
 }
 ```
 
@@ -289,12 +307,15 @@ Post
 ### 应答报文示例
 ```bigquery
 {
-    "id": 121,
-    "totalSupply": 10,
-    "collectionId": 1,
-    "metadataPath": "sdasda",
-    "numRelease": 5,
-    "txHash": "0xwqeq"
+    "code": 200,
+    "data" {
+        "id": 121,
+        "totalSupply": 10,
+        "collectionId": 1,
+        "metadataPath": "sdasda",
+        "numRelease": 5,
+        "txHash": "0xwqeq"
+    }
 }
 ```
 
@@ -330,9 +351,12 @@ Post
 ### 应答报文示例
 ```bigquery
 {
-    "txHash": "0x0ab91284ce4ab2ef0f8017fc12c236bdc48548a7b26017897a97784bb7909fd8",
-    "from": "0x7b3c17dda766f0c8c9fff8b00a27b307410ade6f",
-    "to": "0x811bfaf0a74bd9d27a57d726d39db6b7a76e15cd",
-    "mediaId": 23
+    "code": 200,
+    "data": {
+        "txHash": "0x0ab91284ce4ab2ef0f8017fc12c236bdc48548a7b26017897a97784bb7909fd8",
+        "from": "0x7b3c17dda766f0c8c9fff8b00a27b307410ade6f",
+        "to": "0x811bfaf0a74bd9d27a57d726d39db6b7a76e15cd",
+        "mediaId": 23
+    }
 }
 ```

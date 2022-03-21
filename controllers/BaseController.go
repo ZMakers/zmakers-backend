@@ -17,7 +17,7 @@ type BaseController struct {
 func (BC *BaseController) CheckToken(r *http.Request)  error {
 	token := r.Header.Get("token")
 	user := models.User{
-		Token:    token,
+		Token: token,
 	}
 	return user.VerifyToken(token)
 }
