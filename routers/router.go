@@ -40,6 +40,14 @@ func RegisterServices(controllers ...interface{}) *chi.Mux {
 			} else {
 				os.Exit(010)
 			}
+		case *NftController:
+			op, ok := controller.(*NftController)
+			if ok {
+				fmt.Print("registerNftController")
+				RegisterNftService(op)
+			} else {
+				os.Exit(010)
+			}
 		}
 	}
 	return router
@@ -59,5 +67,10 @@ func RegisterMediaService(MediaController *MediaController) *chi.Mux {
 func RegisterUserService(UserController *UserController) *chi.Mux {
 	router.Post("/user", UserController.NewUser)
 	router.Post("/user/login", UserController.Login)
+	return router
+}
+
+func RegisterNftService(nftController *NftController) *chi.Mux {
+	router.Post("/nft", nftController.MintNft)
 	return router
 }

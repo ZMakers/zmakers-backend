@@ -20,7 +20,7 @@ func (dmcTx *TransactionObj) invokeDmcContract(data []byte) (string, error) {
 	dmcTx.Value = 0
 	dmcTx.Data = data
 
-	return dmcTx.sendTx()
+	return dmcTx.SendTx()
 }
 
 func (dmcTx *TransactionObj) unPause() (string, error) {

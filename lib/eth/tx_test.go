@@ -9,12 +9,8 @@ import (
 	"testing"
 )
 
-//var privateKey = "2eb239288a81323a088bf580894d95f7fcca99b22707b27a17dfe7fa5c3ec669"
-//var address = "0xe40C8D60F3694cCe0569919e369cb0357D88b169"
 var privateKey = "6c7117111a42dd5dfcff752ee0b32c3f85699192d6c18297fc23d473bf8089c9"
 var address = "0x78C531c538A5013121E81BBA80cB9D3Bcee46962"
-//var privateKey = "3a718c35bb55f0fea1585e19cb120e7accbd375370762402daf8240c7fe2d3fc"
-//var address = "0xeD774722eC7fBEE84117D7da7856a1bC8a60B813"
 var  sk *ecdsa.PrivateKey
 
 var tx = TransactionObj{
@@ -35,7 +31,7 @@ func TestSignTx(t *testing.T) {
 }
 
 func TestSendTx(t *testing.T) {
-	txHash, err := tx.sendTx()
+	txHash, err := tx.SendTx()
 	fmt.Println(txHash)
 	fmt.Println(err)
 }

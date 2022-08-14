@@ -46,9 +46,13 @@ func main() {
 		&bc,
 	}
 
+	nftController := controllers.NftController{
+		&bc,
+	}
+
 	http.HandleFunc("/", cors(index))
 	err := http.ListenAndServe(":3000", routers.RegisterServices(&collectionController,
-		&mediaController, &userController))
+		&mediaController, &userController, &nftController))
 	if err != nil {
 		log.Fatal("system error ", err)
 	}

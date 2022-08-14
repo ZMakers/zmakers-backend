@@ -106,7 +106,7 @@ func callContract(msg ethereum.CallMsg, blockNum *big.Int) (string, error) {
 	return string(res), nil
 }
 
-func (dmcTx *TransactionObj) sendTx() (string, error) {
+func (dmcTx *TransactionObj) SendTx() (string, error) {
 	SignedTx, err := dmcTx.SignTx()
 	if err != nil || SignedTx == nil {
 		return "", err
@@ -119,7 +119,7 @@ func (dmcTx *TransactionObj) deployContract() (string, error) {
 		err := errors.New("contract creation does not need \"TO\" address")
 		return "", err
 	}
-	return dmcTx.sendTx()
+	return dmcTx.SendTx()
 }
 
 func getTransactionByHash(txHash string)  (*types.Transaction, error){
