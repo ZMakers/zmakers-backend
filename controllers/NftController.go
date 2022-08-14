@@ -30,6 +30,6 @@ func (nc *NftController)  MintNft(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 	jsonResult.Code = http.StatusOK
-	jsonResult.Data = txHash
+	jsonResult.Data = map[string]string{"txHash": txHash}
 	nc.BC.Render.JSON(w, http.StatusOK, jsonResult)
 }
