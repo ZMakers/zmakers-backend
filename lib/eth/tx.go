@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/ecdsa"
 	"errors"
-	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
@@ -98,13 +97,15 @@ func sendSignedTx(tx *types.Transaction) (string, error){
 	return txHash, nil
 }
 
-func callContract(msg ethereum.CallMsg, blockNum *big.Int) (string, error) {
-	res, err := ethClient.CallContract(context.Background(), msg, blockNum)
-	if err != nil {
-		return "", err
-	}
-	return string(res), nil
-}
+//func CallContract([]byte data) (string, error) {
+//	var msg ethereum.CallMsg
+//	msg.Data = []byte(data)
+//	res, err := ethClient.CallContract(context.Background(), msg, 0)
+//	if err != nil {
+//		return "", err
+//	}
+//	return string(res), nil
+//}
 
 func (dmcTx *TransactionObj) SendTx() (string, error) {
 	SignedTx, err := dmcTx.SignTx()
@@ -134,7 +135,7 @@ func getTransactionByHash(txHash string)  (*types.Transaction, error){
 }
 
 
-func getTransactionReceipt(txHash string) (*types.Receipt, error) {
+func GetTransactionReceipt(txHash string) (*types.Receipt, error) {
 	hash := common.HexToHash(txHash)
 	txReceipt, err := ethClient.TransactionReceipt(context.Background(), hash)
 	if err != nil {

@@ -6,7 +6,7 @@ import (
 )
 
 func TestGenAcc(t *testing.T) {
-	sk, address := genKeyAddressPair()
+	sk, address := GenKeyAddressPair()
 	fmt.Println(sk)
 	fmt.Println(address)
 }

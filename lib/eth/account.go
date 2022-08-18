@@ -6,7 +6,7 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 )
 
-func genKeyAddressPair() (sk string, address string) {
+func GenKeyAddressPair() (sk string, address string) {
 	key, err := crypto.GenerateKey()
 	if err != nil {
 		log.Error("generate private key error: %v", err)
