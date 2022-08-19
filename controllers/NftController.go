@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"math/big"
@@ -93,15 +92,14 @@ func (nc *NftController) ParseMintNftTx(w http.ResponseWriter, r *http.Request) 
 		TokenId int `json:"tokenId"`
 		TokenUri string `json:"tokenUri"`
 	}
-
+	//fmt.Printf("tokenUri %s\n", string(res[32:]))
 	returnData := &ResultData {
 		from,
 		to,
 		tokenId,
-		string(res),
+		string(res)[64:96],
 	}
 
-	resultJson, _ := json.Marshal(returnData)
-	jsonResult.Data = string(resultJson)
+	jsonResult.Data = returnData
 	nc.BC.Render.JSON(w, http.StatusOK, jsonResult)
 }
