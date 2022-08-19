@@ -21,10 +21,16 @@ func (coj *callObj)  callContract() ([]byte, error) {
 		Data: coj.Data,
 	}
 
-	result, err := ethClient.CallContract(context.Background(), callMsg, nil)
-	if err != nil {
-		return nil, err
-	}
+	return ethClient.CallContract(context.Background(), callMsg, nil)
+}
 
-	return result, nil
+func CallContract(contractAdd string, data []byte)  ([]byte, error)  {
+	toAdd := common.HexToAddress(contractAdd)
+
+	callMsg := ethereum.CallMsg{
+		To: &toAdd,
+		Data: data,
+	}
+	return ethClient.CallContract(context.Background(), callMsg, nil)
+
 }
