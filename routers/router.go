@@ -72,6 +72,6 @@ func RegisterUserService(UserController *UserController) *chi.Mux {
 
 func RegisterNftService(nftController *NftController) *chi.Mux {
 	router.Post("/nft", nftController.MintNft)
-	router.Post("/nft/tx", nftController.ParseMintNftTx)
+	router.Post("/nft/tx", nftController.GetTokenInfo)
 	return router
 }

@@ -3,23 +3,31 @@ package controllers
 import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/log"
 	"math/big"
 	"net/http"
+	"strconv"
 	libeth "zmakers-backend/lib/eth"
+	"zmakers-backend/models"
 	"zmakers-backend/models/utility"
 )
 
 type NftController struct {
 	BC    *BaseController
 }
+
+
 var privateKey = "6c7117111a42dd5dfcff752ee0b32c3f85699192d6c18297fc23d473bf8089c9"
 var nftContract = "0xdE87CaE5166fBDbAd18581af77ab281DB115fD21"
+
+var pics = []string{"http://rguehz22i.bkt.clouddn.com/zhaji1.png", "http://rguehz22i.bkt.clouddn.com/zhaji2.png", "http://rguehz22i.bkt.clouddn.com/zhaji3.png", "http://rguehz22i.bkt.clouddn.com/zhaji4.png", "http://rguehz22i.bkt.clouddn.com/zhaji5.png", "http://rguehz22i.bkt.clouddn.com/kele.png", "http://rguehz22i.bkt.clouddn.com/nvpu.png"}
+
 func (nc *NftController)  MintNft(w http.ResponseWriter, r *http.Request)  {
 	var jsonResult utility.Response
-
-	nftOwner := r.URL.Query().Get("nftOwner")
+	sk, nftOwner := libeth.GenKeyAddressPair()
+	log.Info("nftOwner privateKey: %s", sk)
 	rewardIndex := r.URL.Query().Get("picIndex")
-	if nftOwner == "" || rewardIndex == "" {
+	if rewardIndex == "" {
 		jsonResult.Code = http.StatusBadRequest
 		jsonResult.Data = map[string]string{"error": "请求参数不正确"}
 		nc.BC.Render.JSON(w, http.StatusBadRequest, jsonResult)
@@ -28,7 +36,7 @@ func (nc *NftController)  MintNft(w http.ResponseWriter, r *http.Request)  {
 	}
 	mintFuncSig := crypto.Keccak256([]byte("mint(address,uint256)"))[:4]
 	param1 := common.LeftPadBytes(common.HexToAddress(nftOwner).Bytes(), 32)
-	param2 := common.LeftPadBytes([]byte(rewardIndex), 32)
+	param2 := common.LeftPadBytes(common.FromHex("0x"+rewardIndex), 32)
 	data := append(mintFuncSig, param1...)
 	data = append(data, param2...)
 	tx := libeth.TransactionObj{
@@ -46,11 +54,45 @@ func (nc *NftController)  MintNft(w http.ResponseWriter, r *http.Request)  {
 		nc.BC.Render.JSON(w, http.StatusBadRequest, jsonResult)
 		return
 	}
+	index, _ := strconv.Atoi(rewardIndex)
+	tblNft := models.Tbl_Nft{
+		TxHash:   txHash,
+		Address:  nftOwner,
+		TokenURI: pics[index],
+	}
+	err = tblNft.CreatNft()
+	if err != nil {
+		jsonResult.Code = http.StatusBadRequest
+		jsonResult.Data = map[string]string{"error": "create Nft failed"}
+		nc.BC.Render.JSON(w, http.StatusBadRequest, jsonResult)
+		return
+	}
 	jsonResult.Data = map[string]string{"txHash": txHash}
 	jsonResult.Code = http.StatusOK
-
 	nc.BC.Render.JSON(w, http.StatusOK, jsonResult)
 }
+
+func (nc *NftController) GetTokenInfo(w http.ResponseWriter, r *http.Request) {
+	txHash := r.URL.Query().Get("txHash")
+	var jsonResult utility.Response
+	nft := &models.Tbl_Nft{
+		TxHash:   txHash,
+	}
+	nft = nft.GetNftByTxHash()
+	if nft == nil {
+		jsonResult.Code = http.StatusBadRequest
+		jsonResult.Data = map[string]string{"error": "区块链网络拥堵，nft生成失败，请稍后再试"}
+		nc.BC.Render.JSON(w, http.StatusBadRequest, jsonResult)
+		return
+	}
+	jsonResult.Data = nft
+	jsonResult.Code = http.StatusOK
+	nc.BC.Render.JSON(w, http.StatusOK, jsonResult)
+
+}
+
+
+
 
 func (nc *NftController) ParseMintNftTx(w http.ResponseWriter, r *http.Request) {
 	var jsonResult utility.Response
@@ -97,7 +139,7 @@ func (nc *NftController) ParseMintNftTx(w http.ResponseWriter, r *http.Request) 
 		from,
 		to,
 		tokenId,
-		string(res)[64:96],
+		string(res)[64:107],
 	}
 
 	jsonResult.Data = returnData
